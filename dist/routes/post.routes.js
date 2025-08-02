@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { createPost, deletePost, getAllPosts, getUserPostByUsername } from "../controllers/post.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+import { upload } from "../middlewares/multer.middleware";
+const router = Router();
+router.route("/").post(authMiddleware, upload.single("image"), createPost);
+router.route("/").get(getAllPosts);
+router.route("/:id").delete(authMiddleware, deletePost);
+router.route("/user/:username").get(authMiddleware, getUserPostByUsername);
+export default router;
